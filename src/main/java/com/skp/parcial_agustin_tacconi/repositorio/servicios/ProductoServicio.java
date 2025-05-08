@@ -6,6 +6,8 @@ import com.skp.parcial_agustin_tacconi.entidad.Producto;
 
 public interface ProductoServicio {
 
+    //Metodos para manejar las solicitudes HTTP
+    //Contiene la logica, es la estructura de los metodos
     Producto buscarPorNombre(String nombre);
     Producto buscarPorDescripcion(String descripcion);
     List<Producto> findByPrecio(Double precio);

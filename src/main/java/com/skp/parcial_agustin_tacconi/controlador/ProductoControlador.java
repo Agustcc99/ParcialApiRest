@@ -3,6 +3,7 @@ package com.skp.parcial_agustin_tacconi.controlador;
 
 import java.util.List;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.skp.parcial_agustin_tacconi.entidad.Producto;
 import com.skp.parcial_agustin_tacconi.repositorio.servicios.ProductoServicio;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 
@@ -25,14 +27,15 @@ import lombok.RequiredArgsConstructor;
 public class ProductoControlador {
 
     private final ProductoServicio productoServicio;
-    // Aquí puedes agregar los métodos para manejar las solicitudes HTTP (GET, POST, PUT, DELETE)
+    // Metodos para manejar las solicitudes HTTP
 
     //Crear Producto 1
     //Solo acepta@Request porque es un objeto
     @PostMapping
-    public Producto crearProducto(@RequestBody Producto producto) {
-        return productoServicio.guardar(producto);
-    }
+    public ResponseEntity<Producto> crearProducto(@Valid @RequestBody Producto producto) {
+        Producto nuevo = productoServicio.guardar(producto);
+        return ResponseEntity.ok(nuevo);
+    }    
     //Listar todos los productos 2
     @GetMapping()
     public List<Producto> getAllProducto() {
@@ -60,8 +63,9 @@ public class ProductoControlador {
     }
     //Actualizar producto 7
     @PutMapping("/actualizar/{id}")
-    public Producto actualizarProducto(@PathVariable Integer id, @RequestBody Producto producto) {
-        return productoServicio.updateProducto(id, producto);
+    public ResponseEntity<Producto> actualizarProducto(@PathVariable Integer id, @Valid @RequestBody Producto producto) {
+    Producto actualizado = productoServicio.updateProducto(id, producto);
+    return ResponseEntity.ok(actualizado);
     }
     //Eliminar producto 8
     @DeleteMapping("/eliminar/{id}")
